@@ -1,0 +1,54 @@
+# High-level settings for the entire process
+settings:
+  output_file: "output/merged_data.csv"
+  default_join_type: "left"   # A global default if not otherwise specified
+
+# Define the input files
+# Each entry has:
+# - path: The actual file path
+# - name: A reference name used internally for joins
+# - keys: The columns that will serve as the join key(s)
+# - (optional) transformations: Preprocessing steps like column selection or filtering
+files:
+  - name: "main_data"
+    path: "data/main.csv"
+    keys: ["id"]
+    transformations:
+      select_columns: ["id", "customer_name", "email"]
+  
+  - name: "orders"
+    path: "data/orders.csv"
+    keys: ["customer_id"]
+    transformations:
+      rename_columns:
+        customer_id: "id"
+      filter_rows:
+        # Example: only include rows with status 'complete'
+        status: "complete"
+
+  - name: "payments"
+    path: "data/payments.csv"
+    keys: ["order_id"]
+    transformations:
+      select_columns: ["order_id", "payment_method", "amount"]
+
+# Define how files relate to each other
+# This can be a sequence of merges, each specifying:
+# - source: The primary "base" dataset
+# - join_with: The dataset to join onto it
+# - join_type: Type of join (if not set, the default from settings will apply)
+# - on: The join keys if not already inherited from the file definitions
+joins:
+  - source: "main_data"
+    join_with: "orders"
+    join_type: "inner"
+    on:
+      main_data: "id"
+      orders: "id"
+  
+  - source: "main_data"  # after it’s been joined with orders
+    join_with: "payments"
+    join_type: "left"
+    on:
+      orders: "id"
+      payments: "order_id"

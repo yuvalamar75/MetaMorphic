@@ -1,6 +1,7 @@
 import yaml
 from yaml.parser import ParserError
 from yaml.scanner import ScannerError
+from src.app_logger import AppLogger
 
 class ConfigParser:
     def __init__(self, config_path: str, logger):
@@ -33,8 +34,9 @@ class ConfigParser:
     def get_output_file(self) -> str:
         """Get the global output file path from settings."""
         self.logger.info("Retrieving output file setting...")
-        output_file = self._config.get('settings', {}).get('output_file', 'output.csv')
-        self.logger.debug(f"Retrieved output file: {output_file}")
+        if self._config.get('settings', {}).get('output_file'):
+            output_file = self._config.get('settings', {}).get('output_file', None)
+            self.logger.debug(f"Retrieved output file: {output_file}")
         return output_file
 
     def get_default_join_type(self) -> str:
@@ -64,7 +66,7 @@ class ConfigParser:
         return joins
 
 if __name__ == "__main__":
-    from src.app_logger import AppLogger
+    
     logger = AppLogger(name="ConfigParser").get_logger()
     parser = ConfigParser("/Users/yuval/MetaMorphic/configs/first.yaml", logger)
     try:

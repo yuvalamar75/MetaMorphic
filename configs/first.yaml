@@ -10,14 +10,14 @@ settings:
 # - keys: The columns that will serve as the join key(s)
 # - (optional) transformations: Preprocessing steps like column selection or filtering
 files:
-  - name: "main_data"
-    path: "data/main.csv"
+  - name: "file3"
+    path: "sample/batch1/file3.csv"
     keys: ["id"]
     transformations:
       select_columns: ["id", "customer_name", "email"]
   
-  - name: "orders"
-    path: "data/orders.csv"
+  - name: "file4"
+    path: "sample/batch1/file4.csv"
     keys: ["customer_id"]
     transformations:
       rename_columns:
@@ -26,8 +26,8 @@ files:
         # Example: only include rows with status 'complete'
         status: "complete"
 
-  - name: "payments"
-    path: "data/payments.csv"
+  - name: "file5"
+    path: "sample/batch1/file5.csv"
     keys: ["order_id"]
     transformations:
       select_columns: ["order_id", "payment_method", "amount"]

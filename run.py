@@ -1,19 +1,19 @@
 import argparse
 import os
-from src.logger import Logger
+from src.app_logger import AppLogger
 from src.config_parser import ConfigParser
 from src.data_loader import DataLoader
-from src.transformations import Transformations
+from src.transformer import Transformer
 from src.merger import Merger
 import pandas as pd
 
 def main(config_path: str):
     # Initialize logger
-    logger = Logger().get_logger()
+    logger = AppLogger().get_logger()
 
     # Parse config
     logger.info(f"Loading configuration from {config_path}")
-    config_parser = ConfigParser(config_path)
+    config_parser = ConfigParser(config_path,logger)
     config_parser.load_config()
 
     inputs = config_parser.get_inputs()
@@ -23,7 +23,7 @@ def main(config_path: str):
 
     # Initialize helper classes
     data_loader = DataLoader(logger)
-    transformations = Transformations(logger)
+    transformations = Transformer(logger)
     merger = Merger(logger)
 
     # Load data

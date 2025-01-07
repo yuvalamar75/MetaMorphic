@@ -1,0 +1,4 @@
+2025-01-06 23:42:50 [INFO] src.app_logger: Loading configuration from configs/first.yaml
+2025-01-06 23:42:50 [INFO] src.app_logger: ConfigParser initialized with config path: configs/first.yaml
+2025-01-06 23:42:50 [INFO] src.app_logger: Attempting to load configuration from: configs/first.yaml
+2025-01-06 23:42:50 [INFO] src.app_logger: Configuration loaded successfully.

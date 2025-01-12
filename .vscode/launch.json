@@ -1,0 +1,24 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Python: Launch main.py",
+        "type": "python",
+        "request": "launch",
+        // The main script to run
+        "program": "${workspaceFolder}/main.py",
+        // Optional: If your code is in a subfolder, adjust the path accordingly
+        // "program": "${workspaceFolder}/src/main.py",
+  
+        // Where you want the output (terminal) to appear
+        "console": "integratedTerminal",
+  
+        // Command-line arguments to pass to your script
+        "args": [
+          "--config",
+          "/Users/yuval/MetaMorphic/configs/first.yaml"
+        ]
+      }
+    ]
+  }
+  

@@ -1,0 +1,21 @@
+inputs:
+  - file: "data/file1.csv"
+    type: "csv"
+    key_columns: ["id"]
+  - file: "data/file2.csv"
+    type: "xlsx"
+    sheet: "Sheet1"
+    key_columns: ["id"]
+
+operation:
+  type: "merge"
+  how: "inner"
+
+output:
+  file: "data/output.csv"
+  type: "csv"
+  delimiter: ","
+
+preprocessing:
+  columns_to_standardize:
+    - "id"

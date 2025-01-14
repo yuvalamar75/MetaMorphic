@@ -19,7 +19,7 @@ class ConfigParser:
         """
         self.logger.info(f"Attempting to load configuration from: {self.config_path}")
         try:
-            with open(self.config_path, 'r') as f:
+            with open(self.config_path, 'r',encoding='utf-8') as f:
                 self._config = yaml.safe_load(f)
             self.logger.info("Configuration loaded successfully.")
         except FileNotFoundError:
@@ -35,7 +35,7 @@ class ConfigParser:
     # --------------------------
     #         SETTINGS
     # --------------------------
-    def get_output_file(self) -> str:
+    def get_settings(self) -> str:
         """
         Retrieve the global output file path from the 'settings' section.
         Example:
@@ -44,7 +44,7 @@ class ConfigParser:
         """
         self.logger.info("Retrieving output file setting from 'settings'...")
         settings = self._config.get('settings', {})
-        output_file = settings.get('output_file', None)
+        output_file = settings.get('output_folder', None)
         self.logger.debug(f"Retrieved output file: {output_file}")
         return output_file
 
@@ -90,7 +90,6 @@ class ConfigParser:
             file_info = {
                 'name': f.get('name'),
                 'path': f.get('path'),
-                'keys': f.get('keys', []),
                 'transformations': f.get('transformations', {})
             }
             parsed_files.append(file_info)
@@ -122,7 +121,7 @@ class ConfigParser:
                 'source': j.get('source'),
                 'join_with': j.get('join_with'),
                 'join_type': j.get('join_type'),  # Could be None if not specified
-                'on': j.get('on', {})
+                'join_on': j.get('join_on', {})
             }
             parsed_joins.append(join_info)
 

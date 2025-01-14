@@ -1,0 +1,40 @@
+2025-01-14 23:01:23 [INFO] MainScript: Loading configuration from /Users/yuval/MetaMorphic/configs/first.yaml
+2025-01-14 23:01:23 [INFO] MainScript: ConfigParser initialized with config path: /Users/yuval/MetaMorphic/configs/first.yaml
+2025-01-14 23:01:23 [INFO] MainScript: Attempting to load configuration from: /Users/yuval/MetaMorphic/configs/first.yaml
+2025-01-14 23:01:23 [INFO] MainScript: Configuration loaded successfully.
+2025-01-14 23:01:23 [INFO] MainScript: Retrieving entire 'settings' dictionary...
+2025-01-14 23:01:23 [INFO] MainScript: Retrieving files configuration from 'files'...
+2025-01-14 23:01:23 [INFO] MainScript: Retrieving joins configuration from 'joins'...
+2025-01-14 23:01:23 [INFO] MainScript: Output file: /Users/yuval/MetaMorphic/output/mock_first_run
+2025-01-14 23:01:23 [INFO] MainScript: Files definition:
+[{'name': 'file3', 'path': '/Users/yuval/MetaMorphic/sampels/batch_1/file3.csv', 'transformations': [{'standardize_id_columns': ['id']}]}, {'name': 'file4', 'path': '/Users/yuval/MetaMorphic/sampels/batch_1/file4.csv', 'transformations': [{'standardize_id_columns': ['תעודת זהות']}]}, {'name': 'file5', 'path': '/Users/yuval/MetaMorphic/sampels/batch_1/file5.csv', 'transformations': [{'standardize_id_columns': ['id']}]}]
+2025-01-14 23:01:23 [INFO] MainScript: Join steps:
+[{'source': 'file3', 'join_with': 'file4', 'join_type': 'inner', 'join_on': [{'file3': 'id'}, {'file4': 'תעודת זהות'}]}, {'source': 'file3', 'join_with': 'file5', 'join_type': 'left', 'join_on': [{'file3': ['id']}, {'file5': ['id']}]}]
+2025-01-14 23:01:23 [INFO] MainScript: Loading data from /Users/yuval/MetaMorphic/sampels/batch_1/file3.csv as csv
+2025-01-14 23:01:23 [INFO] MainScript: Successfully loaded data from /Users/yuval/MetaMorphic/sampels/batch_1/file3.csv
+2025-01-14 23:01:23 [INFO] MainScript: Starting transformations...
+2025-01-14 23:01:23 [INFO] MainScript: Applying transformation 'standardize_id_columns' with parameters ['id']
+2025-01-14 23:01:23 [INFO] MainScript: Successfully applied 'standardize_id_columns'
+2025-01-14 23:01:23 [INFO] MainScript: All transformations applied successfully.
+2025-01-14 23:01:23 [INFO] MainScript: Loading data from /Users/yuval/MetaMorphic/sampels/batch_1/file4.csv as csv
+2025-01-14 23:01:23 [INFO] MainScript: Successfully loaded data from /Users/yuval/MetaMorphic/sampels/batch_1/file4.csv
+2025-01-14 23:01:23 [INFO] MainScript: Starting transformations...
+2025-01-14 23:01:23 [INFO] MainScript: Applying transformation 'standardize_id_columns' with parameters ['תעודת זהות']
+2025-01-14 23:01:23 [INFO] MainScript: Successfully applied 'standardize_id_columns'
+2025-01-14 23:01:23 [INFO] MainScript: All transformations applied successfully.
+2025-01-14 23:01:23 [INFO] MainScript: Loading data from /Users/yuval/MetaMorphic/sampels/batch_1/file5.csv as csv
+2025-01-14 23:01:23 [INFO] MainScript: Successfully loaded data from /Users/yuval/MetaMorphic/sampels/batch_1/file5.csv
+2025-01-14 23:01:23 [INFO] MainScript: Starting transformations...
+2025-01-14 23:01:23 [INFO] MainScript: Applying transformation 'standardize_id_columns' with parameters ['id']
+2025-01-14 23:01:23 [INFO] MainScript: Successfully applied 'standardize_id_columns'
+2025-01-14 23:01:23 [INFO] MainScript: All transformations applied successfully.
+2025-01-14 23:01:23 [INFO] MainScript: Step 1: Joining 'id' with 'תעודת זהות' on keys id<->תעודת זהות using 'inner' join.
+2025-01-14 23:01:23 [INFO] MainScript: Merging dataframes using keys id<->תעודת זהות and how='inner'...
+2025-01-14 23:01:23 [INFO] MainScript: Join step 1 completed. New DataFrame 'join_step1' added to dfs_dict.
+2025-01-14 23:01:23 [INFO] MainScript: Saved merged DataFrame to '/Users/yuval/MetaMorphic/output/mock_first_run/file3_file4_step1.csv'.
+2025-01-14 23:01:23 [INFO] MainScript: Step 2: Joining '['id']' with '['id']' on keys ['id']<->['id'] using 'inner' join.
+2025-01-14 23:01:23 [INFO] MainScript: Merging dataframes using keys ['id']<->['id'] and how='inner'...
+2025-01-14 23:01:23 [INFO] MainScript: Join step 2 completed. New DataFrame 'join_step2' added to dfs_dict.
+2025-01-14 23:01:23 [INFO] MainScript: Saved merged DataFrame to '/Users/yuval/MetaMorphic/output/mock_first_run/file3_file5_step2.csv'.
+2025-01-14 23:01:23 [INFO] MainScript: final file saved in : csv
+2025-01-14 23:01:23 [INFO] MainScript: Processing completed successfully.

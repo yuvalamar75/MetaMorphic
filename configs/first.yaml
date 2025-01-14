@@ -1,7 +1,7 @@
 # High-level settings for the entire process
 settings:
-  output_file: "output/merged_data.csv"
-  default_join_type: "left"   # A global default if not otherwise specified
+  output_folder: "/Users/yuval/MetaMorphic/output/mock_first_run"
+  output_file_name: "final_merge_file.csv"
 
 # Define the input files
 # Each entry has:
@@ -11,26 +11,18 @@ settings:
 # - (optional) transformations: Preprocessing steps like column selection or filtering
 files:
   - name: "file3"
-    path: "sample/batch1/file3.csv"
-    keys: ["id"]
+    path: "/Users/yuval/MetaMorphic/sampels/batch_1/file3.csv"
     transformations:
-      select_columns: ["id", "customer_name", "email"]
-  
+        - standardize_id_columns: ['id']
   - name: "file4"
-    path: "sample/batch1/file4.csv"
-    keys: ["customer_id"]
+    path: "/Users/yuval/MetaMorphic/sampels/batch_1/file4.csv"
     transformations:
-      rename_columns:
-        customer_id: "id"
-      filter_rows:
-        # Example: only include rows with status 'complete'
-        status: "complete"
+      - standardize_id_columns: ['תעודת זהות']
 
   - name: "file5"
-    path: "sample/batch1/file5.csv"
-    keys: ["order_id"]
+    path: "/Users/yuval/MetaMorphic/sampels/batch_1/file5.csv"
     transformations:
-      select_columns: ["order_id", "payment_method", "amount"]
+      - standardize_id_columns: ['id']
 
 # Define how files relate to each other
 # This can be a sequence of merges, each specifying:
@@ -39,16 +31,18 @@ files:
 # - join_type: Type of join (if not set, the default from settings will apply)
 # - on: The join keys if not already inherited from the file definitions
 joins:
-  - source: "main_data"
-    join_with: "orders"
+  - source: "file3"
+    join_with: "file4"
     join_type: "inner"
-    on:
-      main_data: "id"
-      orders: "id"
+    join_on:
+      - file3: "id"
+      - file4: "תעודת זהות"
   
-  - source: "main_data"  # after it’s been joined with orders
-    join_with: "payments"
+  - source: "file3" 
+    join_with: "file5"
     join_type: "left"
-    on:
-      orders: "id"
-      payments: "order_id"
+    join_on: 
+      - file3:
+        - "id"
+      - file5: 
+        - "id"

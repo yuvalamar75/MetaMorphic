@@ -1,0 +1,32 @@
+2025-01-14 22:00:28 [INFO] MainScript: Loading configuration from /Users/yuval/MetaMorphic/configs/first.yaml
+2025-01-14 22:00:28 [INFO] MainScript: ConfigParser initialized with config path: /Users/yuval/MetaMorphic/configs/first.yaml
+2025-01-14 22:00:28 [INFO] MainScript: Attempting to load configuration from: /Users/yuval/MetaMorphic/configs/first.yaml
+2025-01-14 22:00:28 [INFO] MainScript: Configuration loaded successfully.
+2025-01-14 22:00:28 [INFO] MainScript: Retrieving output file setting from 'settings'...
+2025-01-14 22:00:28 [INFO] MainScript: Retrieving default join type from 'settings'...
+2025-01-14 22:00:28 [INFO] MainScript: Retrieving files configuration from 'files'...
+2025-01-14 22:00:28 [INFO] MainScript: Retrieving joins configuration from 'joins'...
+2025-01-14 22:00:28 [INFO] MainScript: Output file: output/first_mock_run
+2025-01-14 22:00:28 [INFO] MainScript: Default join type: left
+2025-01-14 22:00:28 [INFO] MainScript: Files definition:
+[{'name': 'file3', 'path': '/Users/yuval/MetaMorphic/sampels/batch_1/file3.csv', 'keys': ['id'], 'transformations': [{'standardize_id_columns': ['id']}]}, {'name': 'file4', 'path': '/Users/yuval/MetaMorphic/sampels/batch_1/file4.csv', 'keys': ['customer_id'], 'transformations': [{'standardize_id_columns': ['תעודת זהות']}]}, {'name': 'file5', 'path': '/Users/yuval/MetaMorphic/sampels/batch_1/file5.csv', 'keys': ['order_id'], 'transformations': [{'standardize_id_columns': ['id']}]}]
+2025-01-14 22:00:28 [INFO] MainScript: Join steps:
+[{'source': 'file3', 'join_with': 'file4', 'join_type': 'inner', 'on': {}}, {'source': 'file3', 'join_with': 'file5', 'join_type': 'left', 'on': {}}]
+2025-01-14 22:00:28 [INFO] MainScript: Loading data from /Users/yuval/MetaMorphic/sampels/batch_1/file3.csv as csv
+2025-01-14 22:00:28 [INFO] MainScript: Successfully loaded data from /Users/yuval/MetaMorphic/sampels/batch_1/file3.csv
+2025-01-14 22:00:29 [INFO] MainScript: Starting transformations...
+2025-01-14 22:00:29 [INFO] MainScript: Applying transformation 'standardize_id_columns' with parameters ['id']
+2025-01-14 22:00:29 [INFO] MainScript: Successfully applied 'standardize_id_columns'
+2025-01-14 22:00:29 [INFO] MainScript: All transformations applied successfully.
+2025-01-14 22:00:29 [INFO] MainScript: Loading data from /Users/yuval/MetaMorphic/sampels/batch_1/file4.csv as csv
+2025-01-14 22:00:29 [INFO] MainScript: Successfully loaded data from /Users/yuval/MetaMorphic/sampels/batch_1/file4.csv
+2025-01-14 22:00:34 [INFO] MainScript: Starting transformations...
+2025-01-14 22:00:34 [INFO] MainScript: Applying transformation 'standardize_id_columns' with parameters ['תעודת זהות']
+2025-01-14 22:00:34 [INFO] MainScript: Successfully applied 'standardize_id_columns'
+2025-01-14 22:00:34 [INFO] MainScript: All transformations applied successfully.
+2025-01-14 22:00:34 [INFO] MainScript: Loading data from /Users/yuval/MetaMorphic/sampels/batch_1/file5.csv as csv
+2025-01-14 22:00:34 [INFO] MainScript: Successfully loaded data from /Users/yuval/MetaMorphic/sampels/batch_1/file5.csv
+2025-01-14 22:00:36 [INFO] MainScript: Starting transformations...
+2025-01-14 22:00:36 [INFO] MainScript: Applying transformation 'standardize_id_columns' with parameters ['id']
+2025-01-14 22:00:36 [INFO] MainScript: Successfully applied 'standardize_id_columns'
+2025-01-14 22:00:36 [INFO] MainScript: All transformations applied successfully.

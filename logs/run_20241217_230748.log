@@ -1,9 +1,0 @@
-2024-12-17 23:07:48 [INFO] ConfigParser: ConfigParser initialized with config path: /Users/yuval/MetaMorphic/configs/first.yaml
-2024-12-17 23:07:48 [INFO] ConfigParser: Attempting to load configuration from: /Users/yuval/MetaMorphic/configs/first.yaml
-2024-12-17 23:07:48 [INFO] ConfigParser: Configuration loaded successfully.
-2024-12-17 23:07:48 [INFO] ConfigParser: Retrieving default join type setting...
-2024-12-17 23:07:48 [DEBUG] ConfigParser: Default join type: left
-2024-12-17 23:07:48 [INFO] ConfigParser: Retrieving files configuration...
-2024-12-17 23:07:48 [DEBUG] ConfigParser: Files configuration: [{'name': 'main_data', 'path': 'data/main.csv', 'keys': ['id'], 'transformations': {'select_columns': ['id', 'customer_name', 'email']}}, {'name': 'orders', 'path': 'data/orders.csv', 'keys': ['customer_id'], 'transformations': {'rename_columns': {'customer_id': 'id'}, 'filter_rows': {'status': 'complete'}}}, {'name': 'payments', 'path': 'data/payments.csv', 'keys': ['order_id'], 'transformations': {'select_columns': ['order_id', 'payment_method', 'amount']}}]
-2024-12-17 23:07:48 [INFO] ConfigParser: Retrieving joins configuration...
-2024-12-17 23:07:48 [DEBUG] ConfigParser: Joins configuration: [{'source': 'main_data', 'join_with': 'orders', 'join_type': 'inner', True: {'main_data': 'id', 'orders': 'id'}}, {'source': 'main_data', 'join_with': 'payments', 'join_type': 'left', True: {'orders': 'id', 'payments': 'order_id'}}]

@@ -90,6 +90,7 @@ class ConfigParser:
             file_info = {
                 'name': f.get('name'),
                 'path': f.get('path'),
+                'sheet': f.get('sheet'),
                 'transformations': f.get('transformations', {})
             }
             parsed_files.append(file_info)

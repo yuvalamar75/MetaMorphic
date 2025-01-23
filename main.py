@@ -60,10 +60,10 @@ def main(config_path: str):
     output_file_type = output_file_name.rsplit(".",1)[-1]
     final_output_file_path = os.path.join(output_folder,output_file_name)
     if output_file_type == 'csv':
-        df_final_output_file.to_csv(final_output_file_path, index=False)
+        df_final_output_file.to_csv(final_output_file_path, index=False,encoding='utf-8-sig')
         logger.info(f"final file saved in : {output_file_type}")
     elif output_file_type == 'xlsx':
-        df_final_output_file.to_excel(final_output_file_path, index=False)
+        df_final_output_file.to_excel(final_output_file_path, index=False,encoding='utf-8-sig')
         logger.info(f"final file saved in : {output_file_type}")
     else:
         logger.error(f"Unknown output file type: {output_file_type}")
@@ -76,5 +76,5 @@ if __name__ == "__main__":
     #parser.add_argument("--config", required=True, help="Path to the configuration YAML file")
     #args = parser.parse_args()
     #main(args.config)
-    config_path = '/Users/yuval/MetaMorphic/configs/first.yaml'
+    config_path = '/Users/yuval/MetaMorphic/configs/test_real_data.yaml'
     main(config_path)

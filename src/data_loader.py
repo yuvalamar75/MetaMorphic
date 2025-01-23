@@ -13,7 +13,7 @@ class DataLoader:
             if file_type.lower() == 'csv':
                 df = pd.read_csv(file_path)
             elif file_type.lower() in ['xlsx', 'excel']:
-                df = pd.read_excel(file_path, sheet_name=sheet)
+                df = pd.read_excel(file_path, sheet_name=sheet,engine='openpyxl')
             else:
                 raise ValueError(f"Unsupported file type: {file_type}")
             self.logger.info(f"Successfully loaded data from {file_path}")

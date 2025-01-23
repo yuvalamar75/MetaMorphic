@@ -1,0 +1,38 @@
+# High-level settings for the entire process
+settings:
+  output_folder: "/Users/yuval/MetaMorphic/output/real_data_1"
+  output_file_name: "final_merge_file.xlsx"
+
+# Define the input files
+# Each entry has:
+# - path: The actual file path
+# - name: A reference name used internally for joins
+# - keys: The columns that will serve as the join key(s)
+# - (optional) transformations: Preprocessing steps like column selection or filtering
+files:
+  - name: "CAPS"
+    path: '/Users/yuval/Downloads/PTSD 500 anonimized.xlsx'
+    sheet: 'CAPS'
+    # transformations:
+    #     - standardize_id_columns: ['id']
+  - name: "QUESTIONNAIRES_B"
+    path: '/Users/yuval/Downloads/PTSD 500 anonimized.xlsx'
+    sheet: 'QUESTIONNAIRES B'
+    # transformations:
+    #   - standardize_id_columns: ['תעודת זהות']
+
+
+# Define how files relate to each other
+# This can be a sequence of merges, each specifying:
+# - source: The primary "base" dataset
+# - join_with: The dataset to join onto it
+# - join_type: Type of join (if not set, the default from settings will apply)
+# - on: The join keys if not already inherited from the file definitions
+joins:
+  - source: "CAPS"
+    join_with: "QUESTIONNAIRES_B"
+    join_type: "left"
+    join_on:
+      - CAPS: "קוד מטופל (9 ספרות)"
+      - QUESTIONNAIRES_B: 'קוד אישי'
+  

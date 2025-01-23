@@ -1,4 +1,0 @@
-2025-01-12 20:08:27 [INFO] src.app_logger: Loading configuration from configs/example_config.yaml
-2025-01-12 20:08:27 [INFO] src.app_logger: ConfigParser initialized with config path: configs/example_config.yaml
-2025-01-12 20:08:27 [INFO] src.app_logger: Attempting to load configuration from: configs/example_config.yaml
-2025-01-12 20:08:27 [ERROR] src.app_logger: Configuration file not found: configs/example_config.yaml

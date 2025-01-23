@@ -1,5 +1,0 @@
-2025-01-14 22:59:07 [INFO] MainScript: Loading configuration from /Users/yuval/MetaMorphic/configs/first.yaml
-2025-01-14 22:59:07 [INFO] MainScript: ConfigParser initialized with config path: /Users/yuval/MetaMorphic/configs/first.yaml
-2025-01-14 22:59:07 [INFO] MainScript: Attempting to load configuration from: /Users/yuval/MetaMorphic/configs/first.yaml
-2025-01-14 22:59:07 [INFO] MainScript: Configuration loaded successfully.
-2025-01-14 22:59:07 [INFO] MainScript: Retrieving entire 'settings' dictionary...

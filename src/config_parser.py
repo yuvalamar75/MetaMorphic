@@ -10,7 +10,7 @@ class ConfigParser:
         """
         self.config_path = config_path
         self._config = None
-        self.logger = logger
+        self.logger = logger.getChild(self.__class__.__name__)
         self.logger.info(f"ConfigParser initialized with config path: {self.config_path}")
 
     def load_config(self):

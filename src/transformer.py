@@ -3,7 +3,7 @@ import unicodedata
 
 class Transformer:
     def __init__(self, logger,df):
-        self.logger = logger
+        self.logger = logger.getChild(self.__class__.__name__)
         self.df = df
 
     def standardize_id_columns(self,  columns: list) -> pd.DataFrame:
@@ -28,7 +28,19 @@ class Transformer:
         """Normalize a string to NFC form."""
         if isinstance(s, str):
             return unicodedata.normalize('NFC', s)
-        return s
+        return s    
+    
+    def select_columns(self, columns: list) -> pd.DataFrame:
+        """Keeps only the specified columns in the DataFrame."""
+        self.logger.info(f"slice data frame : before sliceing {self.df.shape[1]} columns")
+        missing_columns = [col for col in columns if col not in self.df.columns]
+        if missing_columns:
+            self.logger.error(f"Columns not found in DataFrame: {missing_columns}")
+            raise ValueError(f"Columns not found: {missing_columns}")
+        
+        self.df = self.df[columns]
+        self.logger.info(f"Retained columns: {self.df.shape[1]}")
+        return self.df
 
     def run_transformations(self, config: dict) -> pd.DataFrame:
             self.logger.info("Starting transformations...")

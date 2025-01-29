@@ -11,7 +11,7 @@ class DataMerger:
         :param join_configuration: List of dictionaries specifying join operations.
         :param output_folder: Path to the folder where output CSV files will be saved.
         """
-        self.logger = logger
+        self.logger = logger.getChild(self.__class__.__name__)
         self.dfs_dict = dfs_dict
         self.join_configuration = join_configuration
         self.output_folder = output_folder
@@ -48,7 +48,7 @@ class DataMerger:
             keys = join_step.get("join_on")
             left_key = keys[0].get(left_file)
             right_key = keys[1].get(right_file)
-            how = join_step.get("how", "inner")
+            how = join_step.get("join_type", "inner")
             output_name = join_step.get("output", f"join_step{step}")
 
             self.logger.info(f"Step {step}: Joining '{left_key}' with '{right_key}' on keys {left_key}<->{right_key} using '{how}' join.")
@@ -59,10 +59,10 @@ class DataMerger:
 
             if left_df is None:
                 self.logger.error(f"Left DataFrame '{left_file}' not found in dfs_dict.")
-                continue
+                raise
             if right_df is None:
                 self.logger.error(f"Right DataFrame '{right_file}' not found in dfs_dict.")
-                continue
+                raise
 
             # Perform the merge
             try:
@@ -70,7 +70,7 @@ class DataMerger:
                 self.dfs_dict[left_file] = merged_df
             except Exception as e:
                 self.logger.error(f"Error merging step:{step} '{left_file}' and '{right_file} ': {e}")
-                continue
+                raise
 
             # Update dfs_dict with the new merged DataFrame
             self.dfs_dict[output_name] = merged_df
@@ -80,7 +80,7 @@ class DataMerger:
             output_filename = f"{left_file}_{right_file}_step{step}.csv"
             output_path = os.path.join(self.output_folder, output_filename)
             try:
-                merged_df.to_csv(output_path, index=False)
+                merged_df.to_csv(output_path, index=False,encoding='utf-8-sig')
                 self.logger.info(f"Saved merged DataFrame to '{output_path}'.")
             except Exception as e:
                 self.logger.error(f"Failed to save '{output_path}': {e}")

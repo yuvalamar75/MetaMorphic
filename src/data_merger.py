@@ -19,9 +19,32 @@ class DataMerger:
         # Create the output folder if it doesn't exist
         os.makedirs(self.output_folder, exist_ok=True)
 
-    def concatenate(self, dataframes: list) -> pd.DataFrame:
-        self.logger.info("Concatenating dataframes...")
-        return pd.concat(dataframes, ignore_index=True)
+    def concatenate(self, dataframes_names: list, ignore_index: bool = True) -> pd.DataFrame:
+        """
+        Concatenates multiple DataFrames from the dfs_dict.
+        
+        :param dataframes_names: List of dataframe names to concatenate
+        :param ignore_index: Whether to reset the index in the result
+        :return: Concatenated DataFrame
+        """
+        self.logger.info(f"Concatenating dataframes: {dataframes_names}")
+        
+        # Get the dataframes from dfs_dict
+        dfs_to_concat = []
+        for df_name in dataframes_names:
+            df = self.dfs_dict.get(df_name)
+            if df is None:
+                self.logger.error(f"DataFrame '{df_name}' not found in dfs_dict.")
+                raise ValueError(f"DataFrame '{df_name}' not found")
+            dfs_to_concat.append(df)
+        
+        try:
+            result = pd.concat(dfs_to_concat, ignore_index=ignore_index)
+            self.logger.info(f"Successfully concatenated {len(dfs_to_concat)} dataframes")
+            return result
+        except Exception as e:
+            self.logger.error(f"Error during concatenation: {e}")
+            raise
 
     def merge(self, left_df: pd.DataFrame, right_df: pd.DataFrame, left_key: list ,right_key: list, how: str = 'inner') -> pd.DataFrame:
         """
@@ -39,54 +62,62 @@ class DataMerger:
     def run_joins(self):
         """
         Executes the join operations as specified in the join_configuration.
-        After each join, updates dfs_dict and saves the resulting DataFrame as a CSV file.
+        Now supports both merge and concatenate operations.
         """
         step = 1
         for join_step in self.join_configuration:
-            left_file = join_step.get("source")
-            right_file = join_step.get("join_with")
-            keys = join_step.get("join_on")
-            left_key = keys[0].get(left_file)
-            right_key = keys[1].get(right_file)
-            how = join_step.get("join_type", "inner")
+            operation_type = join_step.get("type", "merge")  # Default to merge if not specified
             output_name = join_step.get("output", f"join_step{step}")
-
-            self.logger.info(f"Step {step}: Joining '{left_key}' with '{right_key}' on keys {left_key}<->{right_key} using '{how}' join.")
-
-            # Retrieve DataFrames from dfs_dict
-            left_df = self.dfs_dict.get(left_file)
-            right_df = self.dfs_dict.get(right_file)
-
-            if left_df is None:
-                self.logger.error(f"Left DataFrame '{left_file}' not found in dfs_dict.")
-                raise
-            if right_df is None:
-                self.logger.error(f"Right DataFrame '{right_file}' not found in dfs_dict.")
-                raise
-
-            # Perform the merge
+            
             try:
-                merged_df = self.merge(left_df, right_df, left_key,right_key, how)
-                self.dfs_dict[left_file] = merged_df
+                if operation_type == "merge":
+                    # Existing merge logic
+                    left_file = join_step.get("source")
+                    right_file = join_step.get("join_with")
+                    keys = join_step.get("join_on")
+                    left_key = keys[0].get(left_file)
+                    right_key = keys[1].get(right_file)
+                    how = join_step.get("join_type", "inner")
+                    
+                    self.logger.info(f"Step {step}: Merging '{left_file}' with '{right_file}'")
+                    
+                    left_df = self.dfs_dict.get(left_file)
+                    right_df = self.dfs_dict.get(right_file)
+                    
+                    if left_df is None or right_df is None:
+                        raise ValueError(f"Required DataFrames not found: {left_file} or {right_file}")
+                    
+                    result_df = self.merge(left_df, right_df, left_key, right_key, how)
+                    self.dfs_dict[left_file] = result_df
+                    final_left_file = left_file
+                    
+                elif operation_type == "concat":
+                    # New concatenation logic
+                    dataframes = join_step.get("dataframes", [])
+                    ignore_index = join_step.get("ignore_index", True)
+                    
+                    self.logger.info(f"Step {step}: Concatenating dataframes: {dataframes}")
+                    
+                    result_df = self.concatenate(dataframes, ignore_index)
+                    self.dfs_dict[output_name] = result_df
+                    final_left_file = output_name
+                
+                else:
+                    raise ValueError(f"Unknown operation type: {operation_type}")
+                
+                # Save intermediate result
+                output_filename = f"step{step}_{output_name}.csv"
+                output_path = os.path.join(self.output_folder, output_filename)
+                result_df.to_csv(output_path, index=False, encoding='utf-8-sig')
+                self.logger.info(f"Saved result to '{output_path}'")
+                
             except Exception as e:
-                self.logger.error(f"Error merging step:{step} '{left_file}' and '{right_file} ': {e}")
+                self.logger.error(f"Error in step {step}: {e}")
                 raise
-
-            # Update dfs_dict with the new merged DataFrame
-            self.dfs_dict[output_name] = merged_df
-            self.logger.info(f"Join step {step} completed. New DataFrame '{output_name}' added to dfs_dict.")
-
-            # Save the merged DataFrame to CSV
-            output_filename = f"{left_file}_{right_file}_step{step}.csv"
-            output_path = os.path.join(self.output_folder, output_filename)
-            try:
-                merged_df.to_csv(output_path, index=False,encoding='utf-8-sig')
-                self.logger.info(f"Saved merged DataFrame to '{output_path}'.")
-            except Exception as e:
-                self.logger.error(f"Failed to save '{output_path}': {e}")
-
+            
             finally:
-            # Ensure that the step counter is incremented regardless of what happens above
                 step += 1
         
-        return self.dfs_dict,left_file
+        return self.dfs_dict, final_left_file
+
+

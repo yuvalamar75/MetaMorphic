@@ -48,9 +48,15 @@ def main(config_path: str):
         transformation_config = inp.get('transformations', None)
         sheet_name = inp.get('sheet', None)
         df = data_loader.load_data(file_path,file_type,sheet_name)
+        input_file_name = os.path.basename(file_path)
+        logger.info(f"Loaded file '{input_file_name}-{sheet_name}' with {df.shape[0]} rows")
         transformations = Transformer(logger,df)
         df_p = transformations.run_transformations(transformation_config)
         files_procssed[file_name] = df_p
+    # Log the loaded and transformed files
+    logger.info("Files loaded and transformed:")
+    for file_name, df in files_procssed.items():
+        logger.info(f"{file_name}: {df.shape[0]} rows, {df.shape[1]} columns")
 
     merger = DataMerger(logger,files_procssed,joins_config,output_folder)    
     merge_files_dict,left_file = merger.run_joins()

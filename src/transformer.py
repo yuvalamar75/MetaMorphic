@@ -41,7 +41,43 @@ class Transformer:
         self.df = self.df[columns]
         self.logger.info(f"Retained columns: {self.df.shape[1]}")
         return self.df
+    
+    def filter_rows(self, column: str, operator: str, values: list) -> pd.DataFrame:
+        """
+        Filter rows based on whether values in a column are in or not in a list of values.
+        
+        :param column: The column to filter on
+        :param operator: Either 'is_in' or 'not_in'
+        :param values: List of values to filter by
+        :return: Filtered DataFrame
+        """
+        if column not in self.df.columns:
+            self.logger.error(f"Column '{column}' not found in DataFrame.")
+            raise ValueError(f"Column '{column}' not found.")
 
+        self.logger.info(f"Filtering rows where {column} {operator} {values}")
+        
+        original_count = len(self.df)
+        
+        try:
+            if operator == "is_in":
+                self.df = self.df[self.df[column].isin(values)]
+            elif operator == "not_in":
+                self.df = self.df[~self.df[column].isin(values)]
+            else:
+                self.logger.error(f"Invalid operator '{operator}'. Must be 'is_in' or 'not_in'.")
+                raise ValueError(f"Invalid operator '{operator}'. Must be 'is_in' or 'not_in'.")
+            
+            filtered_count = len(self.df)
+            self.logger.info(f"Filtered {original_count - filtered_count} rows. {filtered_count} rows remaining.")
+            
+            return self.df
+            
+        except Exception as e:
+            self.logger.error(f"Error filtering rows: {e}")
+            raise
+
+        
     def run_transformations(self, config: dict) -> pd.DataFrame:
             self.logger.info("Starting transformations...")
 

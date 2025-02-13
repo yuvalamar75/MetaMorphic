@@ -1,7 +1,7 @@
 # High-level settings for the entire process
 settings:
   output_folder: "/Users/yuval/MetaMorphic/output/real_data_1"
-  output_file_name: "final_merge_file.xlsx"
+  output_file_name: "final_merge_file_new.xlsx"
 
 # Define the input files
 # Each entry has:
@@ -10,33 +10,59 @@ settings:
 # - keys: The columns that will serve as the join key(s)
 # - (optional) transformations: Preprocessing steps like column selection or filtering
 files:
-  - name: "CAPS"
-    path: '/Users/yuval/Downloads/PTSD 500 anonimized.xlsx'
+  - name: "CAPS_before"
+    path: '/Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx'
     sheet: 'CAPS'
     transformations:
-      - select_columns :  ["(1) B1 - זכרונות חודרניים - חומרה", "(2) B2 - חלומות מטרידים - חומרה", "(3) B3 - תגובות דיסוציאטיביות - חומרה", "(4) B4 - מצוקה פסיכולוגית בתגובה לרמזים - חומרה", "(5) B5 - תגובה גופנית לרמזים - חומרה", "(6) C1 - הימנעות מזכרונות, מחשבות, רגשות - חומרה", "(7) C2 - הימנעות מתזכורות חיצוניות - חומרה", "(8) D1 - חוסר יכולת לזכור חלקים חשובים מהאירוע - חומרה", "(9) D2 - ציפיות או אמונות שליליות מוגזמות - חומרה", "(10) D3 - קוגניציות מעוותות המובילות לאשמה - חומרה", "(11) D4 - מצב רגשי שלילי מתמשך - חומרה", "(12) D5 - עניין מופחת בהשתתפות בפעילויות - חומרה", "(13) D6 - תחושות של ניתוק או ניכור כלפי הזולת - חומרה", "(14) D7 - חוסר יכולת מתמשך לחוות רגשות חיוביים - חומרה", "(15) E1 - התנהגות רגזנית והתפרצויות זעם - חומרה", "(16) E2 - התנהגות של הרס עצמי או חוסר זהירות - חומרה", "(17) E3 - ערנות יתר - חומרה", "(18) E4 - תגובת בהלה מוגזמת - חומרה", "(19) E5 - קשיים בריכוז - חומרה", "(20) E6 - הפרעות בשינה - חומרה", "(21) האם הייתה הופעת סימפטומים מושהית (6 חודשים מהאירוע הטראומטי או יותר)?", "(22) האם ההפרעה נמשכת יותר מחודש אחד?", "(23) G1 - מצוקה סובייקטיבית - חומרה", "(24) G2 - ליקוי בתפקוד החברתי - חומרה", "(25) G3 - ליקוי בתפקוד התעסוקתי - חומרה", "(26) תוקף כללי", "(27) חומרה כללית", "(28) שיפור כללי", "(29) 1 - דה-פרסונליזציה - חומרה", "(30) 2 - דה-ריאליזציה - חומרה", "CAPS", "שלב בטיפולים", "קוד מטופל (9 ספרות)"]
-        
-  - name: "QUESTIONNAIRES_B"
-    path: '/Users/yuval/Downloads/PTSD 500 anonimized.xlsx'
-    sheet: 'QUESTIONNAIRES B'
+      - filter_rows:
+          column: "שלב בטיפולים"
+          operator: "is_in"
+          values: ["לפני טיפול בתא לחץ"]   
+  - name: "PTSD_partA_before"
+    path: '/Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx'
+    sheet: 'PTSD_partA'
     transformations:
-      - select_columns : ["1. סחרחורת או חולשה על סף עילפון", "2. תחושה שאני לא מוצא/ת עניין בכלום", "3. עצבנות או חוסר שקט פנימי", "4. כאבים בלב או בחזה", "5. תחושת בדידות", "6. תחושת מתח", "7. בחילה או קיבה רגיזה", "8. תחושת דכדוך", "9. פחד פתאומי ללא סיבה", "10. קשיי נשימה", "11. תחושה שאני חסר/ת ערך", "12. התקפי פאניקה או אימה", "13. נימול או חוסר תחושה בחלקים שונים בגוף", "14. תחושת חוסר תקווה לגבי העתיד", "15. תחושת חוסר שקט עד כדי כך שלא יכולת לשבת במנוחה", "16. תחושת חולשה בחלקים שונים בגוף", "17. מחשבות לשים קץ לחייך", "18. תחושת חרדה","קוד אישי"]
+      - filter_rows:
+          column: "אנא בחר/י את שלב הטיפולים בו את/ה נמצא/ת בעת מילוי השאלון"
+          operator: "is_in"
+          values: ['לפני טיפול ראשון בתא לחץ']
   
-  - name: "QUESTIONNAIRES_A"
-    path: '/Users/yuval/Downloads/PTSD 500 anonimized.xlsx'
-    sheet: 'QUESTIONNAIRES A'
+  - name: "PTSD_partB_before"
+    path: '/Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx'
+    sheet: 'PTSD_partB'
     transformations:
-      - select_columns : ["מין", "גיל", "מצב משפחתי", "קוד אישי"]
+      - filter_rows:
+          column: "אנא בחר/י את שלב הטיפולים בו את/ה נמצא/ת בעת מילוי השאלון"
+          operator: "is_in"
+          values: ['לפני טיפול ראשון בתא לחץ']
+
+  - name: "CAPS_after"
+    path: '/Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx'
+    sheet: 'CAPS'
+    transformations:
+      - filter_rows:
+          column: "שלב בטיפולים"
+          operator: "is_in"
+          values: ["אחרי טיפול בתא לחץ"]   
+  - name: "PTSD_partA_after"
+    path: '/Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx'
+    sheet: 'PTSD_partA'
+    transformations:
+      - filter_rows:
+          column: "אנא בחר/י את שלב הטיפולים בו את/ה נמצא/ת בעת מילוי השאלון"
+          operator: "is_in"
+          values: ['לפני טיפול ראשון בתא לחץ']
   
-  - name: "COGNITIVE"
-    path: '/Users/yuval/Downloads/PTSD 500 anonimized.xlsx'
-    sheet: 'COGNITIVE'
+  - name: "PTSD_partB_after"
+    path: '/Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx'
+    sheet: 'PTSD_partB'
     transformations:
-      - select_columns : ["קוד סגול", "global score", "memory", "verbarl memory ", "delayed verbal memory", "non-verbal memory", "delayed non verbal", "executive functions", "attention", "information processiong speed", "motor skills", "global score-2", "memory-2", "verbarl memory -2", "delayed verbal memory-2", "non-verbal memory-2", "delayed non verbal-2", "executive functions-2", "attention-2", "information processiong speed-2", "motor skills-2"]
-
-
- 
-
+      - filter_rows:
+          column: "אנא בחר/י את שלב הטיפולים בו את/ה נמצא/ת בעת מילוי השאלון"
+          operator: "is_in"
+          values: ['לפני טיפול ראשון בתא לחץ']
+            
+  
 
 
 
@@ -47,23 +73,42 @@ files:
 # - join_type: Type of join (if not set, the default from settings will apply)
 # - on: The join keys if not already inherited from the file definitions
 joins:
-  - source: "CAPS"
-    join_with: "QUESTIONNAIRES_B"
+  - source: "CAPS_before"
+    join_with: "PTSD_partA_before"
     join_type: "left"
     join_on:
-      - CAPS: "קוד מטופל (9 ספרות)"
-      - QUESTIONNAIRES_B: 'קוד אישי'
+      - CAPS_before: "קוד מטופל (9 ספרות)"
+      - PTSD_partA_before: 'קוד אישי'
   
-  - source: "CAPS"
-    join_with: "QUESTIONNAIRES_A"
+  - source: "CAPS_before"
+    join_with: "PTSD_partB_before"
     join_type: "left"
     join_on:
-      - CAPS: "קוד מטופל (9 ספרות)"
-      - QUESTIONNAIRES_A: 'קוד אישי'    
+      - CAPS_before: "קוד מטופל (9 ספרות)"
+      - PTSD_partB_before: 'קוד אישי'    
+
+  - source: "CAPS_after"
+    join_with: "PTSD_partA_after"
+    join_type: "left"
+    join_on:
+      - CAPS_after: "קוד מטופל (9 ספרות)"
+      - PTSD_partA_after: 'קוד אישי'
   
-  - source: "CAPS"
-    join_with: "COGNITIVE"
+  - source: "CAPS_after"
+    join_with: "PTSD_partB_before"
     join_type: "left"
     join_on:
-      - CAPS: "קוד מטופל (9 ספרות)"
-      - COGNITIVE: 'קוד סגול'    
+      - CAPS_before: "קוד מטופל (9 ספרות)"
+      - PTSD_partB_before: 'קוד אישי' 
+
+         
+  - type: "concat"
+    dataframes: ["CAPS_before",CAPS_after"]
+    output: "CAPS_all"
+
+  # - source: "CAPS_before"
+  #   join_with: "COGNITIVE_before"
+  #   join_type: "left"
+  #   join_on:
+  #     - CAPS: "קוד מטופל (9 ספרות)"
+  #     - COGNITIVE: 'קוד סגול'    

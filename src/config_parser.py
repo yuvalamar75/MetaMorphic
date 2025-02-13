@@ -73,6 +73,7 @@ class ConfigParser:
           - path (str): Actual file path
           - keys (list): Columns that serve as join keys
           - transformations (dict): Optional transformations (e.g., select_columns, rename_columns, filter_rows)
+          - filter_rows (dict): Optional filter rows (e.g., column, operator, values)
         Example:
           files:
             - name: "file3"
@@ -80,6 +81,10 @@ class ConfigParser:
               keys: ["id"]
               transformations:
                 select_columns: ["id", "customer_name", "email"]
+              filter_rows:
+                column: "status"
+                operator: "is_in"
+                values: ["active", "inactive"]
         Returns a list of dictionaries, each describing a file.
         """
         self.logger.info("Retrieving files configuration from 'files'...")
@@ -91,7 +96,8 @@ class ConfigParser:
                 'name': f.get('name'),
                 'path': f.get('path'),
                 'sheet': f.get('sheet'),
-                'transformations': f.get('transformations', {})
+                'transformations': f.get('transformations', {}),
+                'filter_rows': f.get('filter_rows', {})
             }
             parsed_files.append(file_info)
 

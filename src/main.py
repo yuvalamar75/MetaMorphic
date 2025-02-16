@@ -77,6 +77,9 @@ def main(config_path: str):
 
     logger.info("Processing completed successfully.")
 
+
+
+
 if __name__ == "__main__":
     #parser = argparse.ArgumentParser(description="Data merging application")
     #parser.add_argument("--config", required=True, help="Path to the configuration YAML file")

@@ -61,7 +61,13 @@ files:
           column: "אנא בחר/י את שלב הטיפולים בו את/ה נמצא/ת בעת מילוי השאלון"
           operator: "is_in"
           values: ['לפני טיפול ראשון בתא לחץ']
-            
+
+  - name: "COGNITIVE"
+    path: '/Users/yuval/Downloads/PTSD 500 anonimized.xlsx'
+    sheet: 'COGNITIVE'
+    transformations:
+      - select_columns : ["קוד סגול", "global score", "memory", "verbarl memory ", "delayed verbal memory", "non-verbal memory", "delayed non verbal", "executive functions", "attention", "information processiong speed", "motor skills", "global score-2", "memory-2", "verbarl memory -2", "delayed verbal memory-2", "non-verbal memory-2", "delayed non verbal-2", "executive functions-2", "attention-2", "information processiong speed-2", "motor skills-2"]
+          
   
 
 
@@ -73,37 +79,56 @@ files:
 # - join_type: Type of join (if not set, the default from settings will apply)
 # - on: The join keys if not already inherited from the file definitions
 joins:
-  - source: "CAPS_before"
+  - type: "merge"
+    source: "CAPS_before"
+    join_with: "COGNITIVE"
+    join_type: "left"
+    join_on:
+      - CAPS_before: "קוד מטופל (9 ספרות)"
+      - COGNITIVE: 'קוד סגול' 
+
+  - type: "merge"
+    source: "CAPS_before"
     join_with: "PTSD_partA_before"
     join_type: "left"
     join_on:
       - CAPS_before: "קוד מטופל (9 ספרות)"
       - PTSD_partA_before: 'קוד אישי'
   
-  - source: "CAPS_before"
+  - type: "merge"
+    source: "CAPS_before"
     join_with: "PTSD_partB_before"
     join_type: "left"
     join_on:
       - CAPS_before: "קוד מטופל (9 ספרות)"
       - PTSD_partB_before: 'קוד אישי'    
 
-  - source: "CAPS_after"
+  - type: "merge"
+    source: "CAPS_after"
+    join_with: "COGNITIVE"
+    join_type: "left"
+    join_on:
+      - CAPS_after: "קוד מטופל (9 ספרות)"
+      - COGNITIVE: 'קוד סגול' 
+
+  - type: "merge"
+    source: "CAPS_after"
     join_with: "PTSD_partA_after"
     join_type: "left"
     join_on:
       - CAPS_after: "קוד מטופל (9 ספרות)"
       - PTSD_partA_after: 'קוד אישי'
   
-  - source: "CAPS_after"
-    join_with: "PTSD_partB_before"
+  - type: "merge"
+    source: "CAPS_after"
+    join_with: "PTSD_partB_after"
     join_type: "left"
     join_on:
-      - CAPS_before: "קוד מטופל (9 ספרות)"
-      - PTSD_partB_before: 'קוד אישי' 
+      - CAPS_after: "קוד מטופל (9 ספרות)"
+      - PTSD_partB_after: 'קוד אישי' 
 
-         
   - type: "concat"
-    dataframes: ["CAPS_before",CAPS_after"]
+    dataframes: ["CAPS_before","CAPS_after"]
     output: "CAPS_all"
 
   # - source: "CAPS_before"

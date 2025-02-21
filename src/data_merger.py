@@ -88,6 +88,7 @@ class DataMerger:
                         raise ValueError(f"Required DataFrames not found: {left_file} or {right_file}")
                     
                     result_df = self.merge(left_df, right_df, left_key, right_key, how)
+                    self.logger.info(f"Merged DataFrame shape: {result_df.shape[0]} rows, {result_df.shape[1]} columns")
                     self.dfs_dict[left_file] = result_df
                     final_left_file = left_file
                     

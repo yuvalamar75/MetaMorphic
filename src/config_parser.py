@@ -125,10 +125,14 @@ class ConfigParser:
         parsed_joins = []
         for j in raw_joins:
             join_info = {
+                'type' : j.get('type'),
                 'source': j.get('source'),
                 'join_with': j.get('join_with'),
                 'join_type': j.get('join_type'),  # Could be None if not specified
-                'join_on': j.get('join_on', {})
+                'join_on': j.get('join_on', {}),
+                'dataframes' : j.get('dataframes'),
+                'output' : j.get('output'),
+
             }
             parsed_joins.append(join_info)
 

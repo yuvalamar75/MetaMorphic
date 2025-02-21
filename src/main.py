@@ -69,7 +69,7 @@ def main(config_path: str):
         df_final_output_file.to_csv(final_output_file_path, index=False,encoding='utf-8-sig')
         logger.info(f"final file saved in : {output_file_type}")
     elif output_file_type == 'xlsx':
-        df_final_output_file.to_excel(final_output_file_path, index=False,encoding='utf-8-sig')
+        df_final_output_file.to_excel(final_output_file_path, index=False)
         logger.info(f"final file saved in : {output_file_type}")
     else:
         logger.error(f"Unknown output file type: {output_file_type}")

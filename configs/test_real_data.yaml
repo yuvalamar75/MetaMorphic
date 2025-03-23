@@ -1,7 +1,7 @@
 # High-level settings for the entire process
 settings:
   output_folder: "/Users/yuval/MetaMorphic/output/real_data_1"
-  output_file_name: "final_merge_file_new.xlsx"
+  output_file_name: "final_merge_file_new_cognitive.xlsx"
 
 # Define the input files
 # Each entry has:
@@ -62,11 +62,25 @@ files:
           operator: "is_in"
           values: ['לפני טיפול ראשון בתא לחץ']
 
-  - name: "COGNITIVE"
-    path: '/Users/yuval/Downloads/PTSD 500 anonimized.xlsx'
-    sheet: 'COGNITIVE'
+  - name: "COGNITIVE_before"
+    path: '/Users/yuval/Downloads/קוגניטיבי _150.xlsx'
+    sheet: 'Results'
     transformations:
-      - select_columns : ["קוד סגול", "global score", "memory", "verbarl memory ", "delayed verbal memory", "non-verbal memory", "delayed non verbal", "executive functions", "attention", "information processiong speed", "motor skills", "global score-2", "memory-2", "verbarl memory -2", "delayed verbal memory-2", "non-verbal memory-2", "delayed non verbal-2", "executive functions-2", "attention-2", "information processiong speed-2", "motor skills-2"]
+      - filter_rows:
+          column: "test number"
+          operator: "is_in"
+          values: [1]
+  
+  - name: "COGNITIVE_after"
+    path: '/Users/yuval/Downloads/קוגניטיבי _150.xlsx'
+    sheet: 'Results'
+    transformations:
+      - filter_rows:
+          column: "test number"
+          operator: "is_in"
+          values: [2]
+
+
           
   
 
@@ -102,6 +116,13 @@ joins:
     join_on:
       - CAPS_before: "קוד מטופל (9 ספרות)"
       - PTSD_partB_before: 'קוד אישי'    
+  - type: "merge"
+    source: "CAPS_before"
+    join_with: "COGNITIVE_before"
+    join_type: "left"
+    join_on:
+      - CAPS_before: "קוד מטופל (9 ספרות)"
+      - COGNITIVE_before: 'patient number'      
 
   - type: "merge"
     source: "CAPS_after"
@@ -126,6 +147,14 @@ joins:
     join_on:
       - CAPS_after: "קוד מטופל (9 ספרות)"
       - PTSD_partB_after: 'קוד אישי' 
+  
+  - type: "merge"
+    source: "CAPS_before"
+    join_with: "COGNITIVE_after"
+    join_type: "left"
+    join_on:
+      - CAPS_before: "קוד מטופל (9 ספרות)"
+      - COGNITIVE_before: 'patient number'      
 
   - type: "concat"
     dataframes: ["CAPS_before","CAPS_after"]

@@ -118,4 +118,38 @@ class Transformer:
             self.logger.info("All transformations applied successfully.")
             return self.df
 
+    def add_group_order(self, group_columns: list, order_column_name: str = 'order') -> pd.DataFrame:
+        """
+        Sort values by specified columns and assign order numbers within groups.
+        
+        :param group_columns: List of columns to group and sort by
+        :param order_column_name: Name of the new column that will contain the order numbers (default: 'order')
+        :return: DataFrame with new order column
+        """
+        self.logger.info(f"Adding group order based on columns: {group_columns}")
+        
+        # Validate input columns
+        if not group_columns:
+            self.logger.error("Empty group columns list provided")
+            raise ValueError("Group columns list cannot be empty")
+        
+        missing_columns = [col for col in group_columns if col not in self.df.columns]
+        if missing_columns:
+            self.logger.error(f"Columns not found in DataFrame: {missing_columns}")
+            raise ValueError(f"Columns not found: {missing_columns}")
+        
+        try:
+            # Sort the DataFrame by the specified columns
+            self.df = self.df.sort_values(by=group_columns)
+            
+            # Add order numbers within groups
+            self.df[order_column_name] = self.df.groupby(group_columns, dropna=False).cumcount() + 1
+            
+            self.logger.info(f"Successfully added order column '{order_column_name}'")
+            return self.df
+            
+        except Exception as e:
+            self.logger.error(f"Error adding group order: {e}")
+            raise
+
 

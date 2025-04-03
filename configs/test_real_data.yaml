@@ -1,7 +1,7 @@
 # High-level settings for the entire process
 settings:
-  output_folder: "/Users/yuval/MetaMorphic/output/real_data_1"
-  output_file_name: "final_merge_file_new_cognitive.xlsx"
+  output_folder: "/Users/yuval/Documents/metamorphic_data/output"
+  output_file_name: "final_merge_file_new_cognitive_left.xlsx"
 
 # Define the input files
 # Each entry has:
@@ -18,6 +18,9 @@ files:
           column: "שלב בטיפולים"
           operator: "is_in"
           values: ["לפני טיפול בתא לחץ"]   
+      - drop_duplicates:
+          columns: ["קוד מטופל (9 ספרות)"]
+          keep: "last"          
   - name: "PTSD_partA_before"
     path: '/Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx'
     sheet: 'PTSD_partA'
@@ -26,6 +29,9 @@ files:
           column: "אנא בחר/י את שלב הטיפולים בו את/ה נמצא/ת בעת מילוי השאלון"
           operator: "is_in"
           values: ['לפני טיפול ראשון בתא לחץ']
+      - drop_duplicates:
+          columns: ["קוד אישי"]
+          keep: "last"           
   
   - name: "PTSD_partB_before"
     path: '/Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx'
@@ -35,6 +41,9 @@ files:
           column: "אנא בחר/י את שלב הטיפולים בו את/ה נמצא/ת בעת מילוי השאלון"
           operator: "is_in"
           values: ['לפני טיפול ראשון בתא לחץ']
+      - drop_duplicates:
+          columns: ["קוד אישי"]
+          keep: "last"           
 
   - name: "CAPS_after"
     path: '/Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx'
@@ -43,7 +52,10 @@ files:
       - filter_rows:
           column: "שלב בטיפולים"
           operator: "is_in"
-          values: ["אחרי טיפול בתא לחץ"]   
+          values: ["אחרי טיפול בתא לחץ"]  
+      - drop_duplicates:
+          columns: ["קוד מטופל (9 ספרות)"]
+          keep: "last"           
   - name: "PTSD_partA_after"
     path: '/Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx'
     sheet: 'PTSD_partA'
@@ -52,6 +64,9 @@ files:
           column: "אנא בחר/י את שלב הטיפולים בו את/ה נמצא/ת בעת מילוי השאלון"
           operator: "is_in"
           values: ['לפני טיפול ראשון בתא לחץ']
+      - drop_duplicates:
+          columns: ["קוד אישי"]
+          keep: "last"           
   
   - name: "PTSD_partB_after"
     path: '/Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx'
@@ -61,29 +76,33 @@ files:
           column: "אנא בחר/י את שלב הטיפולים בו את/ה נמצא/ת בעת מילוי השאלון"
           operator: "is_in"
           values: ['לפני טיפול ראשון בתא לחץ']
+      - drop_duplicates:
+          columns: ["קוד אישי"]
+          keep: "last"           
 
   - name: "COGNITIVE_before"
-    path: '/Users/yuval/Downloads/קוגניטיבי _150.xlsx'
+    path: '/Users/yuval/Documents/metamorphic_data/קוגניטיבי _150.xlsx'
     sheet: 'Results'
     transformations:
       - filter_rows:
           column: "test number"
           operator: "is_in"
           values: [1]
+      - drop_duplicates:  
+          columns: ["patient number"]
+          keep: "last"
   
   - name: "COGNITIVE_after"
-    path: '/Users/yuval/Downloads/קוגניטיבי _150.xlsx'
+    path: '/Users/yuval/Documents/metamorphic_data/קוגניטיבי _150.xlsx'
     sheet: 'Results'
     transformations:
       - filter_rows:
           column: "test number"
           operator: "is_in"
           values: [2]
-
-
-          
-  
-
+      - drop_duplicates:  
+          columns: ["patient number"]
+          keep: "last"
 
 
 # Define how files relate to each other
@@ -95,11 +114,11 @@ files:
 joins:
   - type: "merge"
     source: "CAPS_before"
-    join_with: "COGNITIVE"
+    join_with: "COGNITIVE_before"
     join_type: "left"
     join_on:
       - CAPS_before: "קוד מטופל (9 ספרות)"
-      - COGNITIVE: 'קוד סגול' 
+      - COGNITIVE_before: 'patient number' 
 
   - type: "merge"
     source: "CAPS_before"
@@ -126,11 +145,11 @@ joins:
 
   - type: "merge"
     source: "CAPS_after"
-    join_with: "COGNITIVE"
+    join_with: "COGNITIVE_after"
     join_type: "left"
     join_on:
       - CAPS_after: "קוד מטופל (9 ספרות)"
-      - COGNITIVE: 'קוד סגול' 
+      - COGNITIVE_after: 'patient number' 
 
   - type: "merge"
     source: "CAPS_after"
@@ -149,12 +168,12 @@ joins:
       - PTSD_partB_after: 'קוד אישי' 
   
   - type: "merge"
-    source: "CAPS_before"
+    source: "CAPS_after"
     join_with: "COGNITIVE_after"
     join_type: "left"
     join_on:
-      - CAPS_before: "קוד מטופל (9 ספרות)"
-      - COGNITIVE_before: 'patient number'      
+      - CAPS_after: "קוד מטופל (9 ספרות)"
+      - COGNITIVE_after: 'patient number'      
 
   - type: "concat"
     dataframes: ["CAPS_before","CAPS_after"]

@@ -1,0 +1,7 @@
+2025-03-30 22:15:14 [INFO] MainScript: Loading configuration from /Users/yuval/Documents/projects/MetaMorphic/configs/test_real_data.yaml
+2025-03-30 22:15:14 [INFO] MainScript.ConfigParser: ConfigParser initialized with config path: /Users/yuval/Documents/projects/MetaMorphic/configs/test_real_data.yaml
+2025-03-30 22:15:14 [INFO] MainScript.ConfigParser: Attempting to load configuration from: /Users/yuval/Documents/projects/MetaMorphic/configs/test_real_data.yaml
+2025-03-30 22:15:14 [ERROR] MainScript.ConfigParser: Failed to parse YAML configuration. Error: while parsing a block mapping
+  in "/Users/yuval/Documents/projects/MetaMorphic/configs/test_real_data.yaml", line 170, column 5
+expected <block end>, but found '<block mapping start>'
+  in "/Users/yuval/Documents/projects/MetaMorphic/configs/test_real_data.yaml", line 173, column 7

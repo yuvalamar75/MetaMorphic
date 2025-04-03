@@ -77,7 +77,30 @@ class Transformer:
             self.logger.error(f"Error filtering rows: {e}")
             raise
 
+    def drop_duplicates(self, columns: list, keep: str = 'first') -> pd.DataFrame:
+        """
+        Drop duplicate rows based on specified columns.
         
+        :param columns: List of columns to consider for duplicates
+        :param keep: Which duplicate to keep ('first', 'last', or False to drop all)
+        :return: DataFrame with duplicates removed
+        """
+        if not columns:
+            self.logger.error("Empty columns list provided")
+            raise ValueError("Columns list cannot be empty")
+            
+        missing_columns = [col for col in columns if col not in self.df.columns]
+        if missing_columns:
+            self.logger.error(f"Columns not found in DataFrame: {missing_columns}")
+            raise ValueError(f"Columns not found: {missing_columns}")
+            
+        original_count = len(self.df)
+        self.df = self.df.drop_duplicates(subset=columns, keep=keep)
+        dropped_count = original_count - len(self.df)
+        
+        self.logger.info(f"Dropped {dropped_count} duplicate rows based on columns: {columns}")
+        return self.df
+
     def run_transformations(self, config: dict) -> pd.DataFrame:
             self.logger.info("Starting transformations...")
 

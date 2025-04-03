@@ -8,7 +8,7 @@ from transformer import Transformer
 from data_merger import DataMerger
 import pandas as pd
 
-def main(config_path: str):
+def main(config_path):
     # Initialize logger (adjust name/level as needed)
     logger = AppLogger(name="MainScript", level=logging.INFO).get_logger()
 
@@ -85,5 +85,5 @@ if __name__ == "__main__":
     #parser.add_argument("--config", required=True, help="Path to the configuration YAML file")
     #args = parser.parse_args()
     #main(args.config)
-    config_path = '/Users/yuval/MetaMorphic/configs/test_real_data.yaml'
+    config_path = '/Users/yuval/Documents/projects/MetaMorphic/configs/test_real_data.yaml'
     main(config_path)

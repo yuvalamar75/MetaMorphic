@@ -2,10 +2,18 @@ inputs:
   - file: "data/file1.csv"
     type: "csv"
     key_columns: ["id"]
+    transformations:
+      - drop_duplicates:
+          columns: ["id", "name"]
+          keep: "first"
   - file: "data/file2.csv"
     type: "xlsx"
     sheet: "Sheet1"
     key_columns: ["id"]
+    transformations:
+      - drop_duplicates:
+          columns: ["id"]
+          keep: "last"
 
 operation:
   type: "merge"

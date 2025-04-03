@@ -1,0 +1,13 @@
+prefix=/Users/yuval/Documents/projects/MetaMorphic/.conda
+exec_prefix=/Users/yuval/Documents/projects/MetaMorphic/.conda
+libdir=/Users/yuval/Documents/projects/MetaMorphic/.conda/lib
+sharedlibdir=/Users/yuval/Documents/projects/MetaMorphic/.conda/lib
+includedir=/Users/yuval/Documents/projects/MetaMorphic/.conda/include
+
+Name: zlib
+Description: zlib compression library
+Version: 1.2.13
+
+Requires:
+Libs: -L${libdir} -L${sharedlibdir} -lz
+Cflags: -I${includedir}

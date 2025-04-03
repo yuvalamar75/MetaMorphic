@@ -1,0 +1,98 @@
+2025-03-30 22:11:27 [INFO] MainScript: Loading configuration from /Users/yuval/Documents/projects/MetaMorphic/configs/test_real_data.yaml
+2025-03-30 22:11:27 [INFO] MainScript.ConfigParser: ConfigParser initialized with config path: /Users/yuval/Documents/projects/MetaMorphic/configs/test_real_data.yaml
+2025-03-30 22:11:27 [INFO] MainScript.ConfigParser: Attempting to load configuration from: /Users/yuval/Documents/projects/MetaMorphic/configs/test_real_data.yaml
+2025-03-30 22:11:27 [INFO] MainScript.ConfigParser: Configuration loaded successfully.
+2025-03-30 22:11:27 [INFO] MainScript.ConfigParser: Retrieving entire 'settings' dictionary...
+2025-03-30 22:11:27 [INFO] MainScript.ConfigParser: Retrieving files configuration from 'files'...
+2025-03-30 22:11:27 [INFO] MainScript.ConfigParser: Retrieving joins configuration from 'joins'...
+2025-03-30 22:11:27 [INFO] MainScript: Output file: /Users/yuval/Documents/metamorphic_data/output
+2025-03-30 22:11:27 [INFO] MainScript: Files definition:
+[{'name': 'CAPS_before', 'path': '/Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx', 'sheet': 'CAPS', 'transformations': [{'filter_rows': {'column': 'שלב בטיפולים', 'operator': 'is_in', 'values': ['לפני טיפול בתא לחץ']}}, {'drop_duplicates': {'columns': ['קוד מטופל (9 ספרות)'], 'keep': 'last'}}], 'filter_rows': {}}, {'name': 'PTSD_partA_before', 'path': '/Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx', 'sheet': 'PTSD_partA', 'transformations': [{'filter_rows': {'column': 'אנא בחר/י את שלב הטיפולים בו את/ה נמצא/ת בעת מילוי השאלון', 'operator': 'is_in', 'values': ['לפני טיפול ראשון בתא לחץ']}}, {'drop_duplicates': {'columns': ['קוד אישי'], 'keep': 'last'}}], 'filter_rows': {}}, {'name': 'PTSD_partB_before', 'path': '/Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx', 'sheet': 'PTSD_partB', 'transformations': [{'filter_rows': {'column': 'אנא בחר/י את שלב הטיפולים בו את/ה נמצא/ת בעת מילוי השאלון', 'operator': 'is_in', 'values': ['לפני טיפול ראשון בתא לחץ']}}, {'drop_duplicates': {'columns': ['קוד אישי'], 'keep': 'last'}}], 'filter_rows': {}}, {'name': 'CAPS_after', 'path': '/Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx', 'sheet': 'CAPS', 'transformations': [{'filter_rows': {'column': 'שלב בטיפולים', 'operator': 'is_in', 'values': ['אחרי טיפול בתא לחץ']}}, {'drop_duplicates': {'columns': ['קוד מטופל (9 ספרות)'], 'keep': 'last'}}], 'filter_rows': {}}, {'name': 'PTSD_partA_after', 'path': '/Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx', 'sheet': 'PTSD_partA', 'transformations': [{'filter_rows': {'column': 'אנא בחר/י את שלב הטיפולים בו את/ה נמצא/ת בעת מילוי השאלון', 'operator': 'is_in', 'values': ['לפני טיפול ראשון בתא לחץ']}}, {'drop_duplicates': {'columns': ['קוד אישי'], 'keep': 'last'}}], 'filter_rows': {}}, {'name': 'PTSD_partB_after', 'path': '/Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx', 'sheet': 'PTSD_partB', 'transformations': [{'filter_rows': {'column': 'אנא בחר/י את שלב הטיפולים בו את/ה נמצא/ת בעת מילוי השאלון', 'operator': 'is_in', 'values': ['לפני טיפול ראשון בתא לחץ']}}, {'drop_duplicates': {'columns': ['קוד אישי'], 'keep': 'last'}}], 'filter_rows': {}}, {'name': 'COGNITIVE_before', 'path': '/Users/yuval/Documents/metamorphic_data/קוגניטיבי _150.xlsx', 'sheet': 'Results', 'transformations': [{'filter_rows': {'column': 'test number', 'operator': 'is_in', 'values': [1]}}, {'drop_duplicates': {'columns': ['patient number'], 'keep': 'last'}}], 'filter_rows': {}}, {'name': 'COGNITIVE_after', 'path': '/Users/yuval/Documents/metamorphic_data/קוגניטיבי _150.xlsx', 'sheet': None, 'transformations': [{'filter_rows': {'column': 'test number', 'operator': 'is_in', 'values': [2]}}, {'drop_duplicates': {'columns': ['patient number'], 'keep': 'last'}}], 'filter_rows': {}}]
+2025-03-30 22:11:27 [INFO] MainScript: Join steps:
+[{'type': 'merge', 'source': 'CAPS_before', 'join_with': 'COGNITIVE_before', 'join_type': 'inner', 'join_on': [{'CAPS_before': 'קוד מטופל (9 ספרות)'}, {'COGNITIVE_before': 'patient number'}], 'dataframes': None, 'output': None}, {'type': 'merge', 'source': 'CAPS_before', 'join_with': 'PTSD_partA_before', 'join_type': 'inner', 'join_on': [{'CAPS_before': 'קוד מטופל (9 ספרות)'}, {'PTSD_partA_before': 'קוד אישי'}], 'dataframes': None, 'output': None}, {'type': 'merge', 'source': 'CAPS_before', 'join_with': 'PTSD_partB_before', 'join_type': 'inner', 'join_on': [{'CAPS_before': 'קוד מטופל (9 ספרות)'}, {'PTSD_partB_before': 'קוד אישי'}], 'dataframes': None, 'output': None}, {'type': 'merge', 'source': 'CAPS_before', 'join_with': 'COGNITIVE_before', 'join_type': 'inner', 'join_on': [{'CAPS_before': 'קוד מטופל (9 ספרות)'}, {'COGNITIVE_before': 'patient number'}], 'dataframes': None, 'output': None}, {'type': 'merge', 'source': 'CAPS_after', 'join_with': 'COGNITIVE_after', 'join_type': 'inner', 'join_on': [{'CAPS_after': 'קוד מטופל (9 ספרות)'}, {'COGNITIVE_after': 'patient number'}], 'dataframes': None, 'output': None}, {'type': 'merge', 'source': 'CAPS_after', 'join_with': 'PTSD_partA_after', 'join_type': 'inner', 'join_on': [{'CAPS_after': 'קוד מטופל (9 ספרות)'}, {'PTSD_partA_after': 'קוד אישי'}], 'dataframes': None, 'output': None}, {'type': 'merge', 'source': 'CAPS_after', 'join_with': 'PTSD_partB_after', 'join_type': 'inner', 'join_on': [{'CAPS_after': 'קוד מטופל (9 ספרות)'}, {'PTSD_partB_after': 'קוד אישי'}], 'dataframes': None, 'output': None}, {'type': 'merge', 'source': 'CAPS_after', 'join_with': 'COGNITIVE_after', 'join_type': 'inner', 'join_on': [{'CAPS_after': 'קוד מטופל (9 ספרות)'}, {'COGNITIVE_after': 'patient number'}], 'dataframes': None, 'output': None}, {'type': 'concat', 'source': None, 'join_with': None, 'join_type': None, 'join_on': {}, 'dataframes': ['CAPS_before', 'CAPS_after'], 'output': 'CAPS_all'}]
+2025-03-30 22:11:27 [INFO] MainScript.DataLoader: Loading data from /Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx sheet name : CAPS as xlsx 
+2025-03-30 22:11:27 [INFO] MainScript.DataLoader: Successfully loaded data from /Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx sheet name : CAPS
+2025-03-30 22:11:27 [INFO] MainScript: Loaded file 'Questionnaires.xlsx-CAPS' with 539 rows
+2025-03-30 22:11:27 [INFO] MainScript.Transformer: Starting transformations...
+2025-03-30 22:11:27 [INFO] MainScript.Transformer: Applying transformation 'filter_rows' with parameters {'column': 'שלב בטיפולים', 'operator': 'is_in', 'values': ['לפני טיפול בתא לחץ']}
+2025-03-30 22:11:27 [INFO] MainScript.Transformer: Filtering rows where שלב בטיפולים is_in ['לפני טיפול בתא לחץ']
+2025-03-30 22:11:27 [INFO] MainScript.Transformer: Filtered 136 rows. 403 rows remaining.
+2025-03-30 22:11:27 [INFO] MainScript.Transformer: Successfully applied 'filter_rows'
+2025-03-30 22:11:27 [INFO] MainScript.Transformer: Applying transformation 'drop_duplicates' with parameters {'columns': ['קוד מטופל (9 ספרות)'], 'keep': 'last'}
+2025-03-30 22:11:27 [INFO] MainScript.Transformer: Dropped 13 duplicate rows based on columns: ['קוד מטופל (9 ספרות)']
+2025-03-30 22:11:27 [INFO] MainScript.Transformer: Successfully applied 'drop_duplicates'
+2025-03-30 22:11:27 [INFO] MainScript.Transformer: All transformations applied successfully.
+2025-03-30 22:11:27 [INFO] MainScript.DataLoader: Loading data from /Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx sheet name : PTSD_partA as xlsx 
+2025-03-30 22:11:27 [INFO] MainScript.DataLoader: Successfully loaded data from /Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx sheet name : PTSD_partA
+2025-03-30 22:11:27 [INFO] MainScript: Loaded file 'Questionnaires.xlsx-PTSD_partA' with 223 rows
+2025-03-30 22:11:27 [INFO] MainScript.Transformer: Starting transformations...
+2025-03-30 22:11:27 [INFO] MainScript.Transformer: Applying transformation 'filter_rows' with parameters {'column': 'אנא בחר/י את שלב הטיפולים בו את/ה נמצא/ת בעת מילוי השאלון', 'operator': 'is_in', 'values': ['לפני טיפול ראשון בתא לחץ']}
+2025-03-30 22:11:27 [INFO] MainScript.Transformer: Filtering rows where אנא בחר/י את שלב הטיפולים בו את/ה נמצא/ת בעת מילוי השאלון is_in ['לפני טיפול ראשון בתא לחץ']
+2025-03-30 22:11:27 [INFO] MainScript.Transformer: Filtered 2 rows. 221 rows remaining.
+2025-03-30 22:11:27 [INFO] MainScript.Transformer: Successfully applied 'filter_rows'
+2025-03-30 22:11:27 [INFO] MainScript.Transformer: Applying transformation 'drop_duplicates' with parameters {'columns': ['קוד אישי'], 'keep': 'last'}
+2025-03-30 22:11:27 [INFO] MainScript.Transformer: Dropped 5 duplicate rows based on columns: ['קוד אישי']
+2025-03-30 22:11:27 [INFO] MainScript.Transformer: Successfully applied 'drop_duplicates'
+2025-03-30 22:11:27 [INFO] MainScript.Transformer: All transformations applied successfully.
+2025-03-30 22:11:27 [INFO] MainScript.DataLoader: Loading data from /Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx sheet name : PTSD_partB as xlsx 
+2025-03-30 22:11:28 [INFO] MainScript.DataLoader: Successfully loaded data from /Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx sheet name : PTSD_partB
+2025-03-30 22:11:28 [INFO] MainScript: Loaded file 'Questionnaires.xlsx-PTSD_partB' with 213 rows
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Starting transformations...
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Applying transformation 'filter_rows' with parameters {'column': 'אנא בחר/י את שלב הטיפולים בו את/ה נמצא/ת בעת מילוי השאלון', 'operator': 'is_in', 'values': ['לפני טיפול ראשון בתא לחץ']}
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Filtering rows where אנא בחר/י את שלב הטיפולים בו את/ה נמצא/ת בעת מילוי השאלון is_in ['לפני טיפול ראשון בתא לחץ']
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Filtered 2 rows. 211 rows remaining.
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Successfully applied 'filter_rows'
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Applying transformation 'drop_duplicates' with parameters {'columns': ['קוד אישי'], 'keep': 'last'}
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Dropped 0 duplicate rows based on columns: ['קוד אישי']
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Successfully applied 'drop_duplicates'
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: All transformations applied successfully.
+2025-03-30 22:11:28 [INFO] MainScript.DataLoader: Loading data from /Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx sheet name : CAPS as xlsx 
+2025-03-30 22:11:28 [INFO] MainScript.DataLoader: Successfully loaded data from /Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx sheet name : CAPS
+2025-03-30 22:11:28 [INFO] MainScript: Loaded file 'Questionnaires.xlsx-CAPS' with 539 rows
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Starting transformations...
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Applying transformation 'filter_rows' with parameters {'column': 'שלב בטיפולים', 'operator': 'is_in', 'values': ['אחרי טיפול בתא לחץ']}
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Filtering rows where שלב בטיפולים is_in ['אחרי טיפול בתא לחץ']
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Filtered 404 rows. 135 rows remaining.
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Successfully applied 'filter_rows'
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Applying transformation 'drop_duplicates' with parameters {'columns': ['קוד מטופל (9 ספרות)'], 'keep': 'last'}
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Dropped 4 duplicate rows based on columns: ['קוד מטופל (9 ספרות)']
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Successfully applied 'drop_duplicates'
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: All transformations applied successfully.
+2025-03-30 22:11:28 [INFO] MainScript.DataLoader: Loading data from /Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx sheet name : PTSD_partA as xlsx 
+2025-03-30 22:11:28 [INFO] MainScript.DataLoader: Successfully loaded data from /Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx sheet name : PTSD_partA
+2025-03-30 22:11:28 [INFO] MainScript: Loaded file 'Questionnaires.xlsx-PTSD_partA' with 223 rows
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Starting transformations...
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Applying transformation 'filter_rows' with parameters {'column': 'אנא בחר/י את שלב הטיפולים בו את/ה נמצא/ת בעת מילוי השאלון', 'operator': 'is_in', 'values': ['לפני טיפול ראשון בתא לחץ']}
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Filtering rows where אנא בחר/י את שלב הטיפולים בו את/ה נמצא/ת בעת מילוי השאלון is_in ['לפני טיפול ראשון בתא לחץ']
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Filtered 2 rows. 221 rows remaining.
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Successfully applied 'filter_rows'
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Applying transformation 'drop_duplicates' with parameters {'columns': ['קוד אישי'], 'keep': 'last'}
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Dropped 5 duplicate rows based on columns: ['קוד אישי']
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Successfully applied 'drop_duplicates'
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: All transformations applied successfully.
+2025-03-30 22:11:28 [INFO] MainScript.DataLoader: Loading data from /Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx sheet name : PTSD_partB as xlsx 
+2025-03-30 22:11:28 [INFO] MainScript.DataLoader: Successfully loaded data from /Users/yuval/Documents/metamorphic_data/Questionnaires.xlsx sheet name : PTSD_partB
+2025-03-30 22:11:28 [INFO] MainScript: Loaded file 'Questionnaires.xlsx-PTSD_partB' with 213 rows
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Starting transformations...
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Applying transformation 'filter_rows' with parameters {'column': 'אנא בחר/י את שלב הטיפולים בו את/ה נמצא/ת בעת מילוי השאלון', 'operator': 'is_in', 'values': ['לפני טיפול ראשון בתא לחץ']}
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Filtering rows where אנא בחר/י את שלב הטיפולים בו את/ה נמצא/ת בעת מילוי השאלון is_in ['לפני טיפול ראשון בתא לחץ']
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Filtered 2 rows. 211 rows remaining.
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Successfully applied 'filter_rows'
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Applying transformation 'drop_duplicates' with parameters {'columns': ['קוד אישי'], 'keep': 'last'}
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Dropped 0 duplicate rows based on columns: ['קוד אישי']
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: Successfully applied 'drop_duplicates'
+2025-03-30 22:11:28 [INFO] MainScript.Transformer: All transformations applied successfully.
+2025-03-30 22:11:28 [INFO] MainScript.DataLoader: Loading data from /Users/yuval/Documents/metamorphic_data/קוגניטיבי _150.xlsx sheet name : Results as xlsx 
+2025-03-30 22:11:29 [INFO] MainScript.DataLoader: Successfully loaded data from /Users/yuval/Documents/metamorphic_data/קוגניטיבי _150.xlsx sheet name : Results
+2025-03-30 22:11:29 [INFO] MainScript: Loaded file 'קוגניטיבי _150.xlsx-Results' with 304 rows
+2025-03-30 22:11:29 [INFO] MainScript.Transformer: Starting transformations...
+2025-03-30 22:11:29 [INFO] MainScript.Transformer: Applying transformation 'filter_rows' with parameters {'column': 'test number', 'operator': 'is_in', 'values': [1]}
+2025-03-30 22:11:29 [INFO] MainScript.Transformer: Filtering rows where test number is_in [1]
+2025-03-30 22:11:29 [INFO] MainScript.Transformer: Filtered 151 rows. 153 rows remaining.
+2025-03-30 22:11:29 [INFO] MainScript.Transformer: Successfully applied 'filter_rows'
+2025-03-30 22:11:29 [INFO] MainScript.Transformer: Applying transformation 'drop_duplicates' with parameters {'columns': ['patient number'], 'keep': 'last'}
+2025-03-30 22:11:29 [INFO] MainScript.Transformer: Dropped 7 duplicate rows based on columns: ['patient number']
+2025-03-30 22:11:29 [INFO] MainScript.Transformer: Successfully applied 'drop_duplicates'
+2025-03-30 22:11:29 [INFO] MainScript.Transformer: All transformations applied successfully.
+2025-03-30 22:11:29 [INFO] MainScript.DataLoader: Loading data from /Users/yuval/Documents/metamorphic_data/קוגניטיבי _150.xlsx sheet name : None as xlsx 
+2025-03-30 22:11:29 [INFO] MainScript.DataLoader: Successfully loaded data from /Users/yuval/Documents/metamorphic_data/קוגניטיבי _150.xlsx sheet name : None
